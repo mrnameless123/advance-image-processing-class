@@ -144,15 +144,15 @@ def func_add_noisy(image, noise_typ = 'gaussian', **kwargs):
     if noise_typ == 'gaussian':
         noise = np.random.normal(kwargs['mean'], kwargs['var'] ** 0.5,
                                  normed_image.shape)
-        noise = normed_image + noise
-        return func_verify_image(noise*max_value)
+        noised_img = normed_image + noise
+        return func_verify_image(noised_img*max_value), noise
     elif noise_typ == 'laplacian':
         '''y = ln(2x) if x\in(0, 0.5) otherwise -ln(2-2x) if x\in(0.5, 1)
             f(x; \mu, \lambda) = \frac{1}{2\lambda} \exp\left(-\frac{|x - \mu|}{\lambda}\right).
         '''
         noise = np.random.laplace(kwargs['mean'], kwargs['exponential_decay'], normed_image.shape)
-        noise = normed_image + noise;
-        return func_verify_image(noise*max_value)
+        noised_img = normed_image + noise;
+        return func_verify_image(noise*max_value), noise
     elif noise_typ == 'salt':
         out = normed_image
         # Salt mode
