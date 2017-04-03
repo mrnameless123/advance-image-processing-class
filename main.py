@@ -70,12 +70,14 @@ def func_manual_rotate_image_interpolation(param_input, param_angle):
 try:
     rotate_image1 = func_manual_rotate_image_interpolation(img_array, 45)
     rotate_image2 = func_manual_rotate_image_interpolation(img_array, 60)
+    rotate_image3 = func_manual_rotate_image_interpolation(img_array, 90)
 except Exception as Argument:
     print('Adding Laplacian noise exception occurred: {0}'.format(Argument))
     input()
 else:
     Image.fromarray(utils.func_verify_image(rotate_image1)).save('rotate_img_1.jpg')
     Image.fromarray(utils.func_verify_image(rotate_image2)).save('rotate_img_2.jpg')
+    Image.fromarray(utils.func_verify_image(rotate_image3)).save('rotate_img_3.jpg')
     print('Successfully Rotated Image')
 
 
