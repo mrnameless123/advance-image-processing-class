@@ -15,11 +15,12 @@ try:
     gaussian_image1 = utils.func_add_noisy(img_array)
     Image.fromarray(gaussian_image1).save('Gaussian_img_1.jpeg')
     gaussian_image2 = utils.func_add_noisy(img_array, mean=0.2)
+    Image.fromarray(gaussian_image2).save('Gaussian_img_2.jpeg')
 except Exception as Argument:
     print('Adding Gaussian noise exception occurred: {0}'.format(Argument))
     input()
 else:
-    input()
+    print('Added gaussian noise successfully')
 
 
 
