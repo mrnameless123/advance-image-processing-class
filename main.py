@@ -8,23 +8,15 @@ import cv2
 #TODO: Load image into an array
 raw_img = np.fromfile('LENA256.RAW', dtype=np.uint8, sep="")
 img_array = raw_img.reshape((256, 256))
-def func_compute_RMS(param_input):
-    # print(np.linalg.norm(param_input/255))
-    sumvalue = 0
-    for x in param_input:
-        for y in x:
-            sumvalue += y**2
-    print(np.sqrt(sumvalue) / 255)
+
 '''
 Add Gaussian noise
 '''
 try:
-    gaussian_image1, var_noise1 = utils.func_add_noisy(img_array)
-    gaussian_image2, var_noise2 = utils.func_add_noisy(img_array, mean=0.20, var=0.200)
+    gaussian_image1 = utils.func_add_noisy(img_array)
+    gaussian_image2 = utils.func_add_noisy(img_array, mean=0.20, var=0.200)
     #Analysis RMS of noise
-    func_compute_RMS(var_noise2)
-    gaussian_image3, var_noise3 = utils.func_add_noisy(img_array, mean=0.1, var=0.0)
-    func_compute_RMS(var_noise3)
+    gaussian_image3 = utils.func_add_noisy(img_array, mean=0.3, var=0.01)
 except Exception as Argument:
     print('Adding Gaussian noise exception occurred: {0}'.format(Argument))
     input()
@@ -38,9 +30,9 @@ else:
 Add Laplace noise
 '''
 try:
-    laplacian_image1,tmp1 = utils.func_add_noisy(img_array, noise_typ='laplacian')
-    laplacian_image2,tmp2 = utils.func_add_noisy(img_array, noise_typ='laplacian', mean=0.2, exponential_decay= 0.5)
-    laplacian_image3,tmp3 = utils.func_add_noisy(img_array, noise_typ='laplacian', mean=0.1, exponential_decay= 0.15)
+    laplacian_image1 = utils.func_add_noisy(img_array, noise_typ='laplacian')
+    laplacian_image2 = utils.func_add_noisy(img_array, noise_typ='laplacian', mean=0.2, exponential_decay= 0.5)
+    laplacian_image3 = utils.func_add_noisy(img_array, noise_typ='laplacian', mean=0.1, exponential_decay= 0.15)
 except Exception as Argument:
     print('Adding Laplacian noise exception occurred: {0}'.format(Argument))
     input()
