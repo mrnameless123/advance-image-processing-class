@@ -7,8 +7,9 @@ import cv2
 
 #TODO: Load image into an array
 raw_img = np.fromfile('LENA256.RAW', dtype=np.uint8, sep="")
-img_array = raw_img.reshape((256, 256))
-
+img_array = raw_img.reshape((512, 128))
+# raw_img = np.fromfile('Ecoli exp2.png',dtype=np.uint8, sep="")
+# img_array = raw_img.reshape((640, 387))
 '''
 Add Gaussian noise
 '''
@@ -51,8 +52,8 @@ def func_manual_rotate_image_interpolation(param_input, param_angle, param_inter
     origin_center = np.array([np.round(rows / 2), np.round(cols / 2)])
     # TODO: the reflected image b[k][l] = a[N-k][l] page17chap1
     kernel = np.array([[np.cos(ratio), - np.sin(ratio)], [np.sin(ratio), np.cos(ratio)]])
-    new_row = np.int(np.abs(cols * np.cos(ratio)) + np.abs(rows * np.sin(ratio)))
-    new_col = np.int(np.abs(cols * np.sin(ratio)) + np.abs(rows * np.cos(ratio)))
+    new_row = np.int(np.abs(rows * np.cos(ratio)) + np.abs(cols * np.sin(ratio)))
+    new_col = np.int(np.abs(rows * np.sin(ratio)) + np.abs(cols * np.cos(ratio)))
     output = np.zeros((new_row, new_col))
     output_center = np.array([np.round(new_row / 2), np.round(new_col / 2)])
     if param_interpolation == 0: #Nearest interpolation
