@@ -52,19 +52,20 @@ try:
     rotate_image2 = utils.func_manual_rotate_image_interpolation(img_array, 10)
     rotate_image3 = utils.func_manual_rotate_image_interpolation(img_array, 90)
 except Exception as Argument:
-    print('Adding Laplacian noise exception occurred: {0}'.format(Argument))
+    print('Rotating image exception occurred: {0}'.format(Argument))
     input()
 else:
     Image.fromarray(utils.func_verify_image(rotate_image1)).save('rotate_img_1.jpg')
     Image.fromarray(utils.func_verify_image(rotate_image2)).save('rotate_img_2.jpg')
     Image.fromarray(utils.func_verify_image(rotate_image3)).save('rotate_img_3.jpg')
     #Use build in function
-    rotate_image12 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.NEAREST).save('rotate_img_12.jpg')
-    rotate_image13 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.BILINEAR).save('rotate_img_13.jpg')
-    print('Successfully Rotated Image')
-
+#     rotate_image12 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.NEAREST).save('rotate_img_12.jpg')
+#     rotate_image13 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.BILINEAR).save('rotate_img_13.jpg')
+#     print('Successfully Rotated Image')
+rotate_image12 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.NEAREST).save('rotate_img_12.jpg')
+rotate_image13 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.BILINEAR).save('rotate_img_13.jpg')
 try:
-    rotate_image4 = utils.func_manual_rotate_image_interpolation(img_array, 30, 1)
+    rotate_image4 = utils.func_manual_rotate_image_interpolation(img_array, 45, 1)
 except Exception as Argument:
     print('Adding Laplacian noise exception occurred: {0}'.format(Argument))
     input()

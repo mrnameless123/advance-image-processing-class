@@ -234,20 +234,9 @@ def func_manual_rotate_image_interpolation(param_input, param_angle, param_inter
                      tmp = np.dot(kernel.T, vector_rotate)
                      rotate_momentum = tmp + origin_center
                      x1, y1 = np.floor(rotate_momentum).astype(dtype=np.int)
-                     x2, y2 = np.ceil(rotate_momentum).astype(dtype=np.int)
-                     if 0 < x1 < rows and 0 < y1 < cols and 0 < x2 < rows and 0 < y2 < cols:
-                         pol1 = param_input[x1][y1]
-                         pol2 = param_input[x1][y2]
-                         pol3 = param_input[x2][y1]
-                         pol4 = param_input[x2][y2]
-                         bilinear_pixel_value1 = pol1*(x2 - rotate_momentum[0])*(y2 - rotate_momentum[1]) + pol2*(rotate_momentum[0] - x1)*(y2 - rotate_momentum[1])
-                         bilinear_pixel_value2 = pol3*(x2 - rotate_momentum[0])*(rotate_momentum[1] - y1) + pol4*(rotate_momentum[0] - x1)*(rotate_momentum[1] - y1)
-                         bilinear_pixel_value = bilinear_pixel_value1 + bilinear_pixel_value2
-                         if bilinear_pixel_value < 0:
-                             bilinear_pixel_value = 0
-                         elif bilinear_pixel_value > 255:
-                             bilinear_pixel_value = 1
-                         output[x][y] = np.uint8(bilinear_pixel_value)
+                     x2, y2 = np.ceil(rotate_momentum - np.floor(rotate_momentum)).astype(dtype=np.int)
+                     if 0 < x1 < rows-1 and 0 < y1 < cols-1 :
+                         output[x][y] = (1-x2)*(1-y2)*param_input[x1][y1] + (1-x2)*y2*param_input[x1][y1+1] + x2*(1-y2)*param_input[x1+1][y1] + x2*y2*param_input[x1+1][y1+1]
          except Exception as Argument:
             print('func_manual_rotate_image_interpolation exception occurred: {0}'.format(Argument))
             input()
