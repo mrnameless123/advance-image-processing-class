@@ -203,6 +203,56 @@ def func_add_noisy(image, noise_typ = 'gaussian', **kwargs):
         noisy = normed_image + normed_image * gauss
         return func_verify_image(noisy*max_value)
 
+def func_manual_rotate_image_interpolation(param_input, param_angle, param_interpolation=0):
+     rows, cols = np.array(param_input).shape
+     ratio = (param_angle / 180) * np.pi
+     origin_center = np.array([np.round(rows / 2), np.round(cols / 2)])
+     new_row = np.int(np.abs(rows * np.cos(ratio)) + np.abs(cols * np.sin(ratio)))
+     new_col = np.int(np.abs(rows * np.sin(ratio)) + np.abs(cols * np.cos(ratio)))
+     output = np.zeros((new_row, new_col))
+     kernel = np.array([[np.cos(ratio), - np.sin(ratio)], [np.sin(ratio), np.cos(ratio)]])
+     output_center = np.array([np.round(new_row / 2), np.round(new_col / 2)])
+     if param_interpolation == 0:  # Nearest interpolation
+         try:
+            for x in range(new_row):
+               for y in range(new_col):
+                    vector_rotate = np.array([x - output_center[0], y - output_center[1]])
+                    tmp = np.dot(kernel.T, vector_rotate)
+                    rotate_momentum = np.array(tmp + origin_center, dtype=np.int)
+                    if 0 < rotate_momentum[0] < rows and 0 < rotate_momentum[1] < cols:
+                        output[x][y] = param_input[rotate_momentum[0]][rotate_momentum[1]]
+         except Exception as Argument:
+            print('func_manual_rotate_image_interpolation exception occurred: {0}'.format(Argument))
+            input()
+         else:
+            return output
+     elif param_interpolation == 1:  # Bilinear interpolation
+         try:
+             for x in range(new_row):
+                 for y in range(new_col):
+                     vector_rotate = np.array([x - output_center[0], y - output_center[1]])
+                     tmp = np.dot(kernel.T, vector_rotate)
+                     rotate_momentum = tmp + origin_center
+                     x1, y1 = np.floor(rotate_momentum).astype(dtype=np.int)
+                     x2, y2 = np.ceil(rotate_momentum).astype(dtype=np.int)
+                     if 0 < x1 < rows and 0 < y1 < cols and 0 < x2 < rows and 0 < y2 < cols:
+                         pol1 = param_input[x1][y1]
+                         pol2 = param_input[x1][y2]
+                         pol3 = param_input[x2][y1]
+                         pol4 = param_input[x2][y2]
+                         bilinear_pixel_value1 = pol1*(x2 - rotate_momentum[0])*(y2 - rotate_momentum[1]) + pol2*(rotate_momentum[0] - x1)*(y2 - rotate_momentum[1])
+                         bilinear_pixel_value2 = pol3*(x2 - rotate_momentum[0])*(rotate_momentum[1] - y1) + pol4*(rotate_momentum[0] - x1)*(rotate_momentum[1] - y1)
+                         bilinear_pixel_value = bilinear_pixel_value1 + bilinear_pixel_value2
+                         if bilinear_pixel_value < 0:
+                             bilinear_pixel_value = 0
+                         elif bilinear_pixel_value > 255:
+                             bilinear_pixel_value = 1
+                         output[x][y] = np.uint8(bilinear_pixel_value)
+         except Exception as Argument:
+            print('func_manual_rotate_image_interpolation exception occurred: {0}'.format(Argument))
+            input()
+         else:
+            return output
 
 # This function visualizes filters in matrix A. Each column of A is a
 # filter. We will reshape each column into a square image and visualizes
