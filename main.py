@@ -62,8 +62,9 @@ else:
 #     rotate_image12 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.NEAREST).save('rotate_img_12.jpg')
 #     rotate_image13 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.BILINEAR).save('rotate_img_13.jpg')
 #     print('Successfully Rotated Image')
-rotate_image12 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.NEAREST).save('rotate_img_12.jpg')
+# rotate_image12 = Image.fromarray(img_array).rotate(45, expand=True, resample=None).save('rotate_img_12.jpg')
 rotate_image13 = Image.fromarray(img_array).rotate(45, expand=True, resample=Image.BILINEAR).save('rotate_img_13.jpg')
+rotate_image13 = Image.fromarray(img_array).rotate(10, expand=True, resample=Image.BILINEAR).save('rotate_img_14.jpg')
 try:
     rotate_image4 = utils.func_manual_rotate_image_interpolation(img_array, 45, 1)
 except Exception as Argument:
