@@ -9,7 +9,7 @@ class BroadCastType(Enum):
     BC_HORIZONTAL = 1
 
 def func_compute_rms(param_input):
-    print(np.linalg.norm(param_input/255))
+    print(np.linalg.norm(param_input))
     # sumvalue = 0
     # for x in param_input:
     #     for y in x:
@@ -148,6 +148,8 @@ def func_add_noisy(image, noise_typ = 'gaussian', **kwargs):
     normed_matrix = normalize(tmp.astype(np.float64), axis=1, norm='max')
     normed_image = np.reshape(normed_matrix, image.shape)
     max_value = np.amax(image)
+    max_value = 1
+    normed_image = image
     #Process add noise to image according to type of noise
     if noise_typ == 'gaussian':
         noise = np.random.normal(kwargs['mean'], kwargs['var'] ** 0.5,

@@ -15,9 +15,9 @@ Add Gaussian noise
 '''
 try:
     gaussian_image1 = utils.func_add_noisy(img_array)
-    gaussian_image2 = utils.func_add_noisy(img_array, mean=0.20, var=0.200)
+    gaussian_image2 = utils.func_add_noisy(img_array, var=0.200)
     #Analysis RMS of noise
-    gaussian_image3 = utils.func_add_noisy(img_array, mean=0.3, var=0.01)
+    gaussian_image3 = utils.func_add_noisy(img_array, var=0.41)
 except Exception as Argument:
     print('Adding Gaussian noise exception occurred: {0}'.format(Argument))
     input()
