@@ -122,7 +122,7 @@ def func_add_noisy(image, noise_typ = 'gaussian', **kwargs):
         'speckle': 'gaussian_values'}
     kw_defaults = {
         'mean': 0.,
-        'var': 0.01,
+        'var': 10,
         'exponential_decay' : 1.0,
         'amount': 0.005,
         'salt_vs_pepper': 0.5,
@@ -186,14 +186,14 @@ def func_add_noisy(image, noise_typ = 'gaussian', **kwargs):
         num_salt = np.ceil(kwargs['amount'] * normed_image.size * kwargs['salt_vs_pepper'])
         co_ordinates = [np.random.randint(0, i - 1, int(num_salt))
                         for i in normed_image.shape]
-        out[co_ordinates] = 1
+        out[co_ordinates] = 255
 
         # Pepper mode
         num_pepper = np.ceil(kwargs['amount'] * normed_image.size * (1. - kwargs['salt_vs_pepper']))
         co_ordinates = [np.random.randint(0, i - 1, int(num_pepper))
                         for i in normed_image.shape]
         out[co_ordinates] = 0
-        return func_verify_image(out*max_value)
+        return out * max_value
     elif noise_typ == 'poisson':
         values = len(np.unique(normed_image))
         values = 2 ** np.ceil(np.log2(values))

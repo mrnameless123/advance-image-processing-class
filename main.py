@@ -15,37 +15,19 @@ Add Gaussian noise
 '''
 try:
     gaussian_image1 = utils.func_add_noisy(img_array)
-    gaussian_image2 = utils.func_add_noisy(img_array, var=0.200)
-    #Analysis RMS of noise
-    gaussian_image3 = utils.func_add_noisy(img_array, var=0.41)
+    gaussian_image2 = utils.func_add_noisy(img_array, var=75)
+    pepper_image1 = utils.func_add_noisy(img_array, 's&p',amount=0.01)
+
 except Exception as Argument:
     print('Adding Gaussian noise exception occurred: {0}'.format(Argument))
     input()
 else:
     Image.fromarray(gaussian_image1).save('Gaussian_img_1.jpg')
-    Image.fromarray(gaussian_image2).save('Gaussian_img_2.jpg')
-    Image.fromarray(gaussian_image3).save('Gaussian_img_3.jpg')
+    Image.fromarray(pepper_image1).save('Salt&pepper_img_2.jpg')
+
     print('Successfully Added Gaussian Noise')
 
-'''
-Add Laplace noise
-'''
-# try:
-#     laplacian_image1 = utils.func_add_noisy(img_array, noise_typ='laplacian')
-#     laplacian_image2 = utils.func_add_noisy(img_array, noise_typ='laplacian', mean=0.2, exponential_decay= 0.5)
-#     laplacian_image3 = utils.func_add_noisy(img_array, noise_typ='laplacian', mean=0.1, exponential_decay= 0.15)
-# except Exception as Argument:
-#     print('Adding Laplacian noise exception occurred: {0}'.format(Argument))
-#     input()
-# else:
-#     Image.fromarray(laplacian_image1).save('Laplacian_img_1.jpg')
-#     Image.fromarray(laplacian_image2).save('Laplacian_img_2.jpg')
-#     Image.fromarray(laplacian_image3).save('Laplacian_img_3.jpg')
-#     print('Successfully Added Laplacian Noise')
 
-'''
-    Rotate image by interpolation
-'''
 
 try:
     rotate_image1 = utils.func_manual_rotate_image_interpolation(img_array, 45)
