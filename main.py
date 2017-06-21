@@ -8,21 +8,22 @@ import cv2
 #TODO: Load image into an array
 raw_img = np.fromfile('LENA256.RAW', dtype=np.uint8, sep="")
 img_array = raw_img.reshape((256, 256))
+Image.fromarray(img_array).save('Lena.jpg')
 # raw_img = np.fromfile('Ecoli exp2.png',dtype=np.uint8, sep="")
 # img_array = raw_img.reshape((640, 387))
 '''
 Add Gaussian noise
 '''
 try:
-    gaussian_image1 = utils.func_add_noisy(img_array)
-    gaussian_image2 = utils.func_add_noisy(img_array, var=75)
+    # gaussian_image1 = utils.func_add_noisy(img_array)
+    gaussian_image2 = utils.func_add_noisy(img_array, var=30)
     pepper_image1 = utils.func_add_noisy(img_array, 's&p',amount=0.01)
 
 except Exception as Argument:
     print('Adding Gaussian noise exception occurred: {0}'.format(Argument))
     input()
 else:
-    Image.fromarray(gaussian_image1).save('Gaussian_img_1.jpg')
+    # Image.fromarray(gaussian_image1).save('Gaussian_img_1.jpg')
     Image.fromarray(pepper_image1).save('Salt&pepper_img_2.jpg')
 
     print('Successfully Added Gaussian Noise')

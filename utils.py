@@ -93,16 +93,22 @@ def func_my_normalize(param_input):
     normed_image = np.reshape(normed_matrix, param_input.shape)
     max_value = np.amax(param_input)
     return normed_image, max_value
-def func_verify_image(param_input):
+def func_verify_image(param_input, threshold_1 = None, hough_thres = False):
     try:
         clone = param_input.copy()
         x, y = clone.shape
         for i in range(x):
             for j in range(y):
-                if clone[i][j] > 255:
-                    clone[i][j] = 255
-                elif clone[i][j] < 0:
-                    clone[i][j] = 0
+                if threshold_1 is None:
+                    if clone[i][j] > 255:
+                        clone[i][j] = 255
+                    elif clone[i][j] < 0:
+                        clone[i][j] = 0
+                else:
+                    if clone[i][j] > threshold_1:
+                        clone[i][j] = hough_thres and 1 or 255
+                    elif clone[i][j] < threshold_1:
+                        clone[i][j] = 0
     except Exception as Argument:
         print('func_verify_image exception occurred: {0}'.format(param_input))
         input()
